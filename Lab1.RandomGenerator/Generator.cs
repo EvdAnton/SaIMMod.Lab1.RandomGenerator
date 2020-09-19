@@ -7,7 +7,7 @@ namespace Lab1.RandomGenerator
     public class IntervalWithCountOfNumbers
     {
         public float Range { get; set; }
-        public int InnerNumbers { get; set; }
+        public float InnerNumbers { get; set; }
     }
 
     public class Generator
@@ -16,11 +16,8 @@ namespace Lab1.RandomGenerator
         public int Period { get; private set; }
         public List<int> APeriod { get; private set; }
         public float Dispersion { get; private set; }
-
         public float Expectation { get; private set; }
-
         public float SigmaLimit { get; private set; }
-
        
         private uint From { get; set; }
         private uint To { get; set; }
@@ -188,10 +185,10 @@ namespace Lab1.RandomGenerator
 
                 var countOfNumersInInterval = result.Count(value => value < currentInterval && value >= previousInterval);
 
-                intervals.Add(new IntervalWithCountOfNumbers 
+                intervals.Add(new IntervalWithCountOfNumbers
                 {
-                    Range = currentInterval, 
-                    InnerNumbers = countOfNumersInInterval 
+                    Range = currentInterval,
+                    InnerNumbers = (float)countOfNumersInInterval / _countOfElements
                 });
             }
 
@@ -230,14 +227,12 @@ namespace Lab1.RandomGenerator
 
             var aperiods = countOfElementsInEveryPeriod.Where(period => period != Period);
 
+            if (!aperiods.Any())
+            {
+                return new List<int> { Period };
+            }
+
             return aperiods;
-        }
-
-        public List<float> GetValuesFromPeriod(int countOfElementsInPeriod)
-        {
-            var period = Result.FirstOrDefault(result => result.Count == countOfElementsInPeriod);
-
-            return period ?? new List<float>();
         }
     }
 }

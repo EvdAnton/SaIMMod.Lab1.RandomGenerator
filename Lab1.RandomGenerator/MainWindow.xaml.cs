@@ -42,6 +42,7 @@ namespace Lab1.RandomGenerator
             VerifyThatIneNumberMortThenOther(To, From);
             VerifyThatIneNumberMortThenOther(Mod, Multiplier);
 
+            // 65537, 32771, 100000, 1000000
             var generator = new Generator(StartValue, Multiplier, Mod, From, To, CountOfElementsTextBox);
 
             CreateChart(generator);
@@ -60,39 +61,25 @@ namespace Lab1.RandomGenerator
             var period = generator.Period;
             var aperiods = generator.APeriod;
 
-            GetValuesFromPeriod(period, generator, window, true);
+            GetValuesFromPeriod(period, window, true);
 
             foreach (var aperiod in aperiods)
             {
-                GetValuesFromPeriod(aperiod, generator, window, false);
+                GetValuesFromPeriod(aperiod, window, false);
             }
 
             window.Show();
         }
 
 
-        private static void GetValuesFromPeriod(int period, Generator generator, ShowPeriodWindow window, bool isPeriod)
+        private static void GetValuesFromPeriod(int period, ShowPeriodWindow window, bool isPeriod)
         {
-            var values = generator.GetValuesFromPeriod(period);
-
             if (isPeriod)
             {
-                foreach (var value in values)
-                {
-                    window.PeriodTextBlock.Text += value + "  ";
-                }
-
                 window.PeriodCountTextBlock.Text = period.ToString();
             }
             else
             {
-                foreach (var value in values)
-                {
-                    window.APeriodTextBlock.Text += value + "  ";
-                }
-
-                window.APeriodTextBlock.Text += ";   ";
-
                 window.APeriodCountTextBlock.Text = period.ToString();
             }
         }
